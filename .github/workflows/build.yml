@@ -1,0 +1,20 @@
+  - name: Set up Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: '3.11'
+
+  - name: Install dependencies
+    run: |
+      python -m pip install --upgrade pip
+      if exist requirements.txt (pip install -r requirements.txt) else (echo no requirements)
+      pip install pyinstaller
+
+  - name: Build EXE (onefile, windowed)
+    run: |
+      pyinstaller --onefile --noconsole --name normativ_app normativ.py
+
+  - name: Upload artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: normativ_exe
+      path: dist/normativ_app.exe

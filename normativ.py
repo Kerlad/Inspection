@@ -57,8 +57,7 @@ class MainWindow(QMainWindow):
         
         if not os.path.exists('ftp_credentials.txt'):
             with open('ftp_credentials.txt', 'w', encoding='utf-8') as f:
-                f.write('login
-password')
+                f.write('login/npassword')
         
         list_ech = self.read_file_with_encoding("list_ech.txt")
         path = self.read_file_with_encoding("path.txt")

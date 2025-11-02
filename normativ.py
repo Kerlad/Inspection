@@ -56,8 +56,7 @@ class MainWindow(QMainWindow):
                 m.write('месяц год')
         if not os.path.exists('ftp_credentials.txt'):
             with open('ftp_credentials.txt', 'w', encoding='utf-8') as f:
-                f.write('login
-password')
+                f.write('login\npassword')
 
         path = self.read_file_with_encoding("inspection_path.txt")
         month = self.read_file_with_encoding("inspection_month.txt")
@@ -66,8 +65,7 @@ password')
         ftp_password = ''
         try:
             with open("ftp_credentials.txt", encoding='utf-8') as f:
-                creds = f.read().split('
-')
+                creds = f.read().split('\n')
                 ftp_login = creds[0] if len(creds) > 0 else ''
                 ftp_password = creds[1] if len(creds) > 1 else ''
         except Exception:
@@ -164,8 +162,7 @@ password')
             QMessageBox.information(
                 self,
                 "Информация",
-                "Для FTP сервера введите URL вручную в формате:
-ftp://host:port/путь/к/папке"
+                "Для FTP сервера введите URL вручную в формате:\nftp://host:port/путь/к/папке"
             )
             return
         folder_path = QFileDialog.getExistingDirectory(self, "Выберите папку с нормативами", "")
@@ -192,8 +189,7 @@ ftp://host:port/путь/к/папке"
 
     def save_ftp_credentials(self):
         with open("ftp_credentials.txt", "w", encoding='utf-8') as f:
-            f.write(f"{self.line_edit_ftp_login.text()}
-{self.line_edit_ftp_password.text()}")
+            f.write(f"{self.line_edit_ftp_login.text()}\n{self.line_edit_ftp_password.text()}")
         QMessageBox.information(self, "Успех", "Учетные данные FTP сохранены!")
 
     def start_check(self):
@@ -237,11 +233,8 @@ ftp://host:port/путь/к/папке"
                 df_normativ.to_excel(writer, sheet_name='Нормативы', index=False)
             finish = time.time()
             res = finish - start
-            self.label.setText(f"Выполнено за {round(res, 2)} секунд!
-Сохранено в:
-{output_file}")
-            QMessageBox.information(self, "Готово", f"Проверка завершена!
-Файл сохранен: {output_file}")
+            self.label.setText(f"Выполнено за {round(res, 2)} секунд!\nСохранено в:\n{output_file}")
+            QMessageBox.information(self, "Готово", f"Проверка завершена!\nФайл сохранен: {output_file}")
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", f"Ошибка сохранения файла: {str(e)}")
         self.progress_bar.setVisible(False)
